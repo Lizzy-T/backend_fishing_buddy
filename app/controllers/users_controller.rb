@@ -13,20 +13,34 @@ class UsersController < ApplicationController
     end
 
     def create
-        @user = User.new(user_params)
+        @user = User.new(create_params)
         if @user.save
             render json: @user, status: :created 
         else
             render json: { errors: @user.errors.full_messages },
             status: :unprocessable_entity
         end
+    end
 
+    def update
+        unless @user.update(user_params)
+            render json: { errors: @user.errors.full_messages},
+            status: :unprocessable_entity
+        end
+    end
+
+    def destroy
+        @user.destroy
     end
 
     private 
 
     def user_params
         params.permit(:name, :username, :password, :password_confirmation, :phone)
+    end
+
+    def create_params
+        params.permit(:name, :phone)
     end
 
     def find_user
