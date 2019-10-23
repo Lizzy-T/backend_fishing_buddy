@@ -5,6 +5,6 @@ Rails.application.routes.draw do
   resources :patterns, only: [:index, :show, :create]
   resources :colors, only: [:create]
 
-  resources :users, only: [:index, :show, :create], param: :username
+  resources :users, only: [:index, :show, :create, :update, :destroy], param: :username
   post '/login', to: 'authentication#login'
 end
