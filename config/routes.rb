@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   resources :colors, only: [:create]
 
   resources :users, only: [:index, :show, :create], param: :username
+  post '/login', to: 'authentication#login'
 end
