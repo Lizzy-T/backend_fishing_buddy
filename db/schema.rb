@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_24_172720) do
+ActiveRecord::Schema.define(version: 2019_10_24_190042) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,20 @@ ActiveRecord::Schema.define(version: 2019_10_24_172720) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["pattern_id"], name: "index_colors_on_pattern_id"
+  end
+
+  create_table "days", force: :cascade do |t|
+    t.string "date"
+    t.string "location"
+    t.string "directions"
+    t.string "comments"
+    t.string "picture"
+    t.bigint "color_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["color_id"], name: "index_days_on_color_id"
+    t.index ["user_id"], name: "index_days_on_user_id"
   end
 
   create_table "insect_families", force: :cascade do |t|
@@ -54,5 +68,7 @@ ActiveRecord::Schema.define(version: 2019_10_24_172720) do
   end
 
   add_foreign_key "colors", "patterns"
+  add_foreign_key "days", "colors"
+  add_foreign_key "days", "users"
   add_foreign_key "patterns", "insect_families"
 end
