@@ -4,7 +4,7 @@ class DaysController < ApplicationController
     before_action :find_pattern, except: :index
 
     def index
-        @days = Day.all 
+        @days = @user.days
 
         render json: @days, include: :color
     end
@@ -26,7 +26,6 @@ class DaysController < ApplicationController
         else
             render json: { errors: @day.errors.full_messages }
         end
-
     end
 
     private
