@@ -1,6 +1,6 @@
 class Pattern < ApplicationRecord
   belongs_to :insect_family
-  has_many :colors
+  has_many :colors, dependent: :destroy
 
   validates :name, presence: true
   validates :name, uniqueness: true 

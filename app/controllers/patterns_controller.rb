@@ -21,6 +21,12 @@ class PatternsController < ApplicationController
         end
     end
 
+    def destroy
+        find_pattern
+        
+        @pattern.destroy
+    end
+
     private 
 
     def find_pattern
