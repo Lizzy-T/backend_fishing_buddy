@@ -1,11 +1,12 @@
 class DaysController < ApplicationController
     before_action :find_user
     before_action :authorize_request
+    before_action :find_pattern, except: :index
 
     def index
         @days = Day.all 
 
-        render json: @days
+        render json: @days, include: :color
     end
 
     def create
@@ -15,12 +16,13 @@ class DaysController < ApplicationController
             directions: day_params[:directions],
             comments: day_params[:comments],
             picture: day_params[:picture],
+            patternName: @pattern.name,
             color_id: day_params[:color_id],
             user_id: @user.id,
         })
         
         if @day.save
-            render json: @day, status: :created 
+            render json: @day, status: :created
         else
             render json: { errors: @day.errors.full_messages }
         end
@@ -39,6 +41,11 @@ class DaysController < ApplicationController
             render json: { errors: 'User not found' },
             status: :not_found
         end
+    end
+
+    def find_pattern
+        @color = Color.find(params[:color_id])
+        @pattern = Pattern.find(@color.pattern_id)
     end
 
 end
