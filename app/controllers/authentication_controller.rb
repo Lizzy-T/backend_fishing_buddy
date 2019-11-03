@@ -2,11 +2,7 @@ class AuthenticationController < ApplicationController
     def login
         @user = User.find_by(username: params[:username])
         if (@user && @user.authenticate(params[:password]))
-            @token = JsonWebToken.encode({
-                user_id: @user.id,
-                exp: 24.hours.from_now.to_i
-            }, Rails.application.secrets.secret_key_base)
-
+            @token = JsonWebToken.encode({user_id: @user.id})
             render json: {
                 token: @token,
             }, status: :ok
