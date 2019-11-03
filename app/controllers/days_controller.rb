@@ -1,6 +1,6 @@
 class DaysController < ApplicationController
     before_action :find_user
-    # before_action :authorize_request
+    before_action :authorize_request
     before_action :find_pattern, except: :index
 
     def index
